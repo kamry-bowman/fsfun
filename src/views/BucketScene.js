@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Bottle from '../components/Bottle';
 
 export default function BucketScene(props) {
@@ -6,10 +7,16 @@ export default function BucketScene(props) {
   const shownBottles = options.slice(position, position + 4);
 
   return (
-    <React.Fragment>
+    <Frame>
       {shownBottles.map(bottle => (
         <Bottle key={bottle.id} bottle={bottle} />
       ))}
-    </React.Fragment>
+    </Frame>
   );
 }
+
+const Frame = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: space-evenly;
+`;

@@ -54,12 +54,15 @@ const MainApp = styled.div`
   ${color}
   ${space}
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const HeaderText = styled.h1`
   ${fontSize}
   ${color}
   text-align: center;
+  font-weight: 800;
 `;
 
 export default App;
