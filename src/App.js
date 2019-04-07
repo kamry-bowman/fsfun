@@ -14,8 +14,16 @@ class App extends Component {
     error: null,
   };
 
-  async componentDidMount() {
+  componentDidMount() {
     this.fetchOptions();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.fetchOptions();
+      // this will not likely be called since we are at the
+      // root of the application but this remains for refactor resilience
+    }
   }
 
   fetchOptions = async () => {
@@ -31,6 +39,27 @@ class App extends Component {
     }
   };
 
+  updateLikes = async ({ id, name, likes }) => {
+    const newLikes = likes + 1;
+    try {
+      // update server
+      await fetch(`${url}/beer/${id}`, {
+        method: 'PUT',
+        body: JSON.stringify({
+          likes: newLikes,
+        }),
+      });
+
+      // update state
+      const newOptions = this.state.options.map(option =>
+        option.id === id ? { ...option, likes: newLikes } : option
+      );
+      this.setState({ options: newOptions });
+    } catch (err) {
+      this.setState({ error: 'Failed to update likes.' });
+    }
+  };
+
   render() {
     const { editing, options, position } = this.state;
     return (
@@ -42,7 +71,11 @@ class App extends Component {
             </HeaderText>
           </header>
           {editing ? null : (
-            <BucketScene options={options} position={position} />
+            <BucketScene
+              options={options}
+              position={position}
+              updateLikes={this.updateLikes}
+            />
           )}
         </MainApp>
       </ThemeProvider>

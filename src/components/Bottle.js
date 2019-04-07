@@ -4,24 +4,35 @@ import Heart from './Heart';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 
-export default function Bottle(props) {
+export default React.memo(function Bottle(props) {
   const { name, likes } = props.bottle;
-  const px = 3;
+  const mx = 3;
+
+  const updateThisBottle = () => {
+    props.updateLikes(props.bottle);
+  };
   return (
-    <BottleFrame px={px}>
+    <BottleFrame mx={mx}>
       <BottleSvg />
-      <DataContainer px={px}>
+      <DataContainer>
         <h2>{name}</h2>
-        <Heart likes={likes} />
+        <Heart likes={likes} onClick={updateThisBottle} />
       </DataContainer>
     </BottleFrame>
   );
-}
+});
 
 const BottleFrame = styled.div`
   ${space}
   position: relative;
   display: flex;
+
+  h2 {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 4.2rem;
+    text-align: center;
+  }
 `;
 
 const DataContainer = styled.div`
