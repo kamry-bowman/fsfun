@@ -119,7 +119,7 @@ function createBeer(name, likes, callback) {
   clientReq.end();
 }
 
-async function getBeers(callback) {
+function getBeers(callback) {
   const clientReq = https.request(
     'https://beer.fluentcloud.com/v1/beer',
     {
