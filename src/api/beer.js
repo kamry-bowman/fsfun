@@ -1,4 +1,5 @@
 const https = require('https');
+const url = require('url');
 
 exports.handler = (event, context, callback) => {
   const routeParam = event.path.match(/\/beer\/(.+)/);
@@ -124,7 +125,7 @@ function getBeers(callback) {
   console.log('called getBeers');
   const clientReq = https.request(
     {
-      url: 'https://beer.fluentcloud.com/v1/beer',
+      ...url.parse('https://beer.fluentcloud.com/v1/beer'),
       headers: {
         'Content-Type': 'application/json',
       },
