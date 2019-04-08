@@ -8,7 +8,7 @@ import theme from './theme';
 
 const url =
   process.env.NODE_ENV === 'production'
-    ? '.'
+    ? './api'
     : process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
@@ -34,6 +34,7 @@ class App extends Component {
   fetchOptions = async () => {
     try {
       const result = await fetch(`${url}/beer`);
+      console.log(`${url}/beer`);
       const jsonResult = await result.json();
       const filteredResult = jsonResult.filter(option => option.name !== '');
       this.setState({ options: filteredResult });
