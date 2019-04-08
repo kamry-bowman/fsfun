@@ -78,9 +78,13 @@ class App extends Component {
       <ThemeProvider theme={theme}>
         <MainApp bg="lightBlue">
           <header>
-            <HeaderText fontSize="header" color="blue" py={5}>
+            <HeaderText fontSize="header" color="blue" pt={4} pb={2}>
               FluentStream Fun Summer Fun Time
             </HeaderText>
+            <Nav fontSize={3} color="blue" py={4}>
+              <p>{`Don't see what you like?`}</p>
+              <button>Add a beer</button>
+            </Nav>
           </header>
           {editing ? null : (
             <BucketScene
@@ -103,6 +107,28 @@ const MainApp = styled.div`
   min-width: 1140px;
   display: flex;
   flex-direction: column;
+`;
+
+const Nav = styled.nav`
+  ${fontSize}
+  ${color}
+  ${space}
+  text-align: center;
+  p {
+    opacity: .8;
+  }
+
+  button {
+    font-weight: 800;
+    text-decoration: underline;
+    opacity: .9;
+    transition: transform .5s;
+
+    &:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
 `;
 
 const HeaderText = styled.h1`
