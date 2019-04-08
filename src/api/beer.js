@@ -2,6 +2,7 @@ const https = require('https');
 
 exports.handler = (event, context, callback) => {
   const routeParam = event.path.match(/\/beer\/(.+)/);
+  console.log('route param', routeParam);
   if (event.httpMethod === 'OPTIONS') {
     preflight(callback);
   } else if (routeParam && event.httpMethod === 'PUT') {
@@ -120,6 +121,7 @@ function createBeer(name, likes, callback) {
 }
 
 function getBeers(callback) {
+  console.log('called getBeers');
   const clientReq = https.request(
     'https://beer.fluentcloud.com/v1/beer',
     {
@@ -128,6 +130,7 @@ function getBeers(callback) {
       },
     },
     clientRes => {
+      console.log('clientRes, line 133,', Object.keys(clientRes));
       clientRes.setEncoding('utf8');
       let rawData = '';
       clientRes.on('data', chunk => {
