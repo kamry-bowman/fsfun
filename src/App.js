@@ -6,7 +6,10 @@ import styled, { ThemeProvider } from 'styled-components';
 import { color, space, fontSize } from 'styled-system';
 import theme from './theme';
 
-let { REACT_APP_SERVER_URL: url } = process.env;
+const url =
+  process.env.NODE_ENV === 'production'
+    ? '.'
+    : process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
   state = {
