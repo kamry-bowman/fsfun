@@ -3,7 +3,6 @@ const url = require('url');
 
 exports.handler = (event, context, callback) => {
   const routeParam = event.path.match(/\/beer\/(.+)/);
-  console.log('route param', routeParam);
   if (event.httpMethod === 'OPTIONS') {
     preflight(callback);
   } else if (routeParam && event.httpMethod === 'PUT') {
@@ -72,12 +71,6 @@ function updateLikes(id, likes, callback) {
     })
   );
   clientReq.end();
-  console.log(
-    'trying',
-    JSON.stringify({
-      likes,
-    })
-  );
 }
 
 function createBeer(name, likes, callback) {
@@ -122,7 +115,6 @@ function createBeer(name, likes, callback) {
 }
 
 function getBeers(callback) {
-  console.log('called getBeers');
   const clientReq = https.request(
     {
       ...url.parse('https://beer.fluentcloud.com/v1/beer'),
@@ -131,11 +123,9 @@ function getBeers(callback) {
       },
     },
     clientRes => {
-      console.log('clientRes, line 133,', Object.keys(clientRes));
       clientRes.setEncoding('utf8');
       let rawData = '';
       clientRes.on('data', chunk => {
-        console.log('chunk received', chunk);
         rawData += chunk;
       });
       clientRes.on('error', err => {
@@ -143,7 +133,6 @@ function getBeers(callback) {
         callback(err.message);
       });
       clientRes.on('end', () => {
-        console.log('end hit', rawData);
         callback(null, {
           statusCode: 200,
           headers: {
@@ -155,6 +144,5 @@ function getBeers(callback) {
       });
     }
   );
-  console.log('right before calling the clientReq');
   clientReq.end();
 }
