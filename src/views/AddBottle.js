@@ -1,0 +1,81 @@
+import React from 'react';
+import styled from 'styled-components';
+import { space } from 'styled-system';
+import Bottle from '../components/Bottle';
+import add from '../images/add.svg';
+
+export default class AddBottle extends React.Component {
+  state = {
+    name: '',
+  };
+
+  updateName = e => {
+    if (e.target.value.length > 24) {
+      this.props.setError('Cannot accept names over 24 characters.');
+    } else {
+      this.props.setError('');
+      this.setState({ name: e.target.value });
+    }
+  };
+
+  render() {
+    // const {} = this.props;
+
+    return (
+      <Container mx={4}>
+        <Bottle>
+          <form>
+            <textarea
+              type="text"
+              name="name"
+              id="name"
+              value={this.state.name}
+              onChange={this.updateName}
+            />
+            <button type="submit">
+              <img src={add} alt="Create bottle" />
+            </button>
+          </form>
+        </Bottle>
+      </Container>
+    );
+  }
+}
+
+const Container = styled.div`
+  ${space}
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  textarea {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 3.2rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: start;
+    width: 100%;
+  }
+
+  button {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+`;

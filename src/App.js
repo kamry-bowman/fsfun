@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import BucketScene from './views/BucketScene';
+import AddBottle from './views/AddBottle';
+import Error from './components/Error';
 import styled, { ThemeProvider } from 'styled-components';
 import { color, space, fontSize } from 'styled-system';
 import theme from './theme';
@@ -8,10 +10,10 @@ let { REACT_APP_SERVER_URL: url } = process.env;
 
 class App extends Component {
   state = {
-    editing: false,
+    adding: false,
     options: [],
     position: 0,
-    error: null,
+    error: '',
   };
 
   componentDidMount() {
@@ -72,10 +74,12 @@ class App extends Component {
     });
   };
 
-  toggleEdit = () => this.setState({ editing: !this.state.editing });
+  toggleAdd = () => this.setState({ adding: !this.state.adding });
+
+  setError = error => this.setState({ error });
 
   render() {
-    const { editing, options, position } = this.state;
+    const { adding, options, position, error } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <MainApp bg="lightBlue">
@@ -85,14 +89,22 @@ class App extends Component {
             </HeaderText>
             <Nav fontSize={3} color="blue" py={4}>
               <p>
-                {!editing ? `Don't see what you like?` : `Changed your mind?`}
+                {!adding ? `Don't see what you like?` : `Changed your mind?`}
               </p>
-              <button type="button" onClick={this.toggleEdit}>
-                {!editing ? 'Add a beer' : 'Back to bucket'}
+              <button type="button" onClick={this.toggleAdd}>
+                {!adding ? 'Add a beer' : 'Back to bucket'}
               </button>
             </Nav>
+            {error ? (
+              <Error
+                error={error}
+                clearError={() => this.setState({ error: '' })}
+              />
+            ) : null}
           </header>
-          {editing ? null : (
+          {adding ? (
+            <AddBottle setError={this.setError} />
+          ) : (
             <BucketScene
               options={options}
               position={position}
@@ -113,6 +125,13 @@ const MainApp = styled.div`
   min-width: 1140px;
   display: flex;
   flex-direction: column;
+
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Nav = styled.nav`

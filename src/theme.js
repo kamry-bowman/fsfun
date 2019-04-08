@@ -6,6 +6,8 @@ const theme = {
     darkGray: '#292F36',
     lightGray: '#696D72',
     offWhite: '#E7E7E7',
+    warning: '#C05150',
+    warningAccent: '#631918',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fontSizes: ['1.2rem', '1.6rem', '2rem', '3.2rem', '7.4rem'],

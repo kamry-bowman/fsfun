@@ -4,6 +4,7 @@ import { space } from 'styled-system';
 import Bottle from '../components/Bottle';
 import BucketBackSvg from '../components/BucketBackSvg';
 import BucketFrontSvg from '../components/BucketFrontSvg';
+import Heart from '../components/Heart';
 import arrow from '../images/arrow.svg';
 
 export default function BucketScene(props) {
@@ -17,7 +18,10 @@ export default function BucketScene(props) {
           <img src={arrow} className="inverted" alt="left arrow" />
         </button>
         {shownBottles.map(bottle => (
-          <Bottle key={bottle.id} bottle={bottle} updateLikes={updateLikes} />
+          <Bottle key={bottle.id}>
+            <BottleText>{bottle.name}</BottleText>
+            <Heart likes={bottle.likes} onClick={() => updateLikes(bottle)} />
+          </Bottle>
         ))}
         <button>
           <img
@@ -94,4 +98,15 @@ const BucketFrontFrame = styled.div`
   align-items: flex-end;
   z-index: 2;
   pointer-events: none;
+`;
+
+const BottleText = styled.h2`
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 3.2rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `;
