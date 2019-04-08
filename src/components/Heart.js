@@ -6,12 +6,34 @@ import { space, color } from 'styled-system';
 export default function Heart(props) {
   const { likes } = props;
   return (
-    <HeartFrame onClick={props.onClick}>
-      <HeartSvg />
-      <LikesCount color="offWhite">{likes}</LikesCount>
-    </HeartFrame>
+    <HeartButton onClick={props.onClick} type="button">
+      <HeartFrame>
+        <HeartSvg />
+        <LikesCount color="offWhite">{likes}</LikesCount>
+      </HeartFrame>
+    </HeartButton>
   );
 }
+
+const HeartButton = styled.button`
+  outline-color: #961d4e;
+
+  div {
+    transition: transform 0.2s;
+  }
+
+  &:hover {
+    div {
+      transform: scale(1.05);
+    }
+  }
+
+  &:active {
+    div {
+      transform: scale(0.95);
+    }
+  }
+`;
 
 const HeartFrame = styled.div`
   ${space}
