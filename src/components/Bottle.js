@@ -3,9 +3,9 @@ import BottleSvg from './BottleSvg';
 import styled from 'styled-components';
 import { space } from 'styled-system';
 
-export default React.memo(function Bottle({ children }) {
+export default React.memo(function Bottle({ children, tilt }) {
   return (
-    <BottleFrame mx={3}>
+    <BottleFrame mx={3} tilt={tilt}>
       <BottleSvg />
       <DataContainer>{React.Children.toArray(children)}</DataContainer>
     </BottleFrame>
@@ -20,6 +20,14 @@ const BottleFrame = styled.div`
   width: 195px;
   height: 737px;
   z-index: 1;
+  transform: rotate(
+    ${props =>
+      props.tilt === 'left'
+        ? '-5deg'
+        : props.tilt === 'right'
+        ? '5deg'
+        : '0deg'}
+  );
 `;
 
 const DataContainer = styled.div`

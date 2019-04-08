@@ -11,14 +11,19 @@ export default function BucketScene(props) {
   const { options, position, updateLikes, selectLeft, selectRight } = props;
   const shownBottles = options.slice(position, position + 4);
 
+  const tiltHash = {
+    0: 'left',
+    [shownBottles.length - 1]: 'right',
+  };
+
   return (
     <Container mx={4}>
       <BottlesFrame>
         <button type="button" onClick={selectLeft}>
           <img src={arrow} className="inverted" alt="left arrow" />
         </button>
-        {shownBottles.map(bottle => (
-          <Bottle key={bottle.id}>
+        {shownBottles.map((bottle, index) => (
+          <Bottle key={bottle.id} tilt={tiltHash[index] || 'none'}>
             <BottleText>{bottle.name}</BottleText>
             <Heart likes={bottle.likes} onClick={() => updateLikes(bottle)} />
           </Bottle>
