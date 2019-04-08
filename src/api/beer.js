@@ -9,7 +9,6 @@ exports.handler = (event, context, callback) => {
   } else if (!routeParam && event.httpMethod === 'GET') {
     getBeers(callback);
   } else if (!routeParam && event.httpMethod === 'POST') {
-    console.log('attempting post');
     try {
       const { name, likes } = JSON.parse(event.body);
       createBeer(name, likes, callback);
@@ -43,7 +42,6 @@ function updateLikes(id, likes, callback) {
     clientRes => {
       clientRes.setEncoding('utf8');
       clientRes.on('error', err => {
-        console.log(err);
         callback(err.message);
       });
       clientRes.on('data', () => {
@@ -51,7 +49,6 @@ function updateLikes(id, likes, callback) {
         // data event to be processed to exit
       });
       clientRes.on('end', () => {
-        console.log('end');
         try {
           callback(null, {
             statusCode: 204,
@@ -98,9 +95,6 @@ function createBeer(name, likes, callback) {
       });
       clientRes.on('data', () => {});
       clientRes.on('end', () => {
-        console.log('ending..');
-        // console.log(Object.keys(clientRes));
-        console.log(clientRes.statusCode);
         try {
           callback(null, {
             statusCode: 204,
@@ -123,13 +117,6 @@ function createBeer(name, likes, callback) {
     })
   );
   clientReq.end();
-  console.log(
-    'trying',
-    JSON.stringify({
-      name,
-      likes,
-    })
-  );
 }
 
 async function getBeers(callback) {

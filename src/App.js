@@ -63,7 +63,6 @@ class App extends Component {
 
   // updates position in range of options, wrapping around
   updatePos = step => {
-    console.log(step);
     this.setState(({ position, options }) => {
       let newPosition = (position + step) % options.length;
       newPosition =
