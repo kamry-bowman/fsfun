@@ -63,6 +63,8 @@ const BottlesFrame = styled.div`
   button {
     align-self: center;
     img {
+      width: 50px;
+      height: auto;
       transition: transform 0.4s;
     }
 
