@@ -18,13 +18,21 @@ export default class AddBottle extends React.Component {
     }
   };
 
+  submit = e => {
+    e.preventDefault();
+    if (!this.state.name) {
+      return this.props.setError('Must write a name before submitting.');
+    }
+    this.props.createOption(this.state.name);
+  };
+
   render() {
     // const {} = this.props;
 
     return (
       <Container mx={4}>
         <Bottle>
-          <form>
+          <form onSubmit={this.submit}>
             <textarea
               type="text"
               name="name"
@@ -73,9 +81,16 @@ const Container = styled.div`
     height: 60px;
     margin-bottom: 10px;
 
+    &:hover {
+      img {
+        opacity: 1;
+      }
+    }
+
     img {
       width: 100%;
       height: 100%;
+      opacity: 0.8;
     }
   }
 `;

@@ -8,6 +8,14 @@ exports.handler = (event, context, callback) => {
     updateLikes(routeParam[1], JSON.parse(event.body).likes, callback);
   } else if (!routeParam && event.httpMethod === 'GET') {
     getBeers(callback);
+  } else if (!routeParam && event.httpMethod === 'POST') {
+    console.log('attempting post');
+    try {
+      const { name, likes } = JSON.parse(event.body);
+      createBeer(name, likes, callback);
+    } catch {
+      callback('Could not parse body.');
+    }
   }
 };
 
@@ -73,6 +81,57 @@ function updateLikes(id, likes, callback) {
   );
 }
 
+function createBeer(name, likes, callback) {
+  const clientReq = https.request(
+    `https://beer.fluentcloud.com/v1/beer`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+    clientRes => {
+      clientRes.setEncoding('utf8');
+      clientRes.on('error', err => {
+        console.log(err);
+        callback(err.message);
+      });
+      clientRes.on('data', () => {});
+      clientRes.on('end', () => {
+        console.log('ending..');
+        // console.log(Object.keys(clientRes));
+        console.log(clientRes.statusCode);
+        try {
+          callback(null, {
+            statusCode: 204,
+            headers: {
+              'content-type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+            },
+          });
+        } catch (e) {
+          console.log(e, 'caught');
+          callback(e.message);
+        }
+      });
+    }
+  );
+  clientReq.write(
+    JSON.stringify({
+      name,
+      likes,
+    })
+  );
+  clientReq.end();
+  console.log(
+    'trying',
+    JSON.stringify({
+      name,
+      likes,
+    })
+  );
+}
+
 async function getBeers(callback) {
   const clientReq = https.request(
     'https://beer.fluentcloud.com/v1/beer',
@@ -109,27 +168,4 @@ async function getBeers(callback) {
   );
 
   clientReq.end();
-  // callback(null, {
-  //   statusCode: 200,
-  //   headers: {
-  //     'content-type': 'application/json',
-  //     'Access-Control-Allow-Origin': '*',
-  //   },
-  //   body: JSON.stringify([
-  //     { id: 423, name: "Daniel's Beer", likes: 22 },
-  //     { id: 422, name: '', likes: 0 },
-  //     { id: 421, name: 'Heisler', likes: 2 },
-  //     { id: 193, name: 'Nitro Milk Porter', likes: 3 },
-  //     { id: 189, name: 'Fat Tire', likes: 8 },
-  //     { id: 188, name: 'Station 26 Juicy Banger IPA', likes: 5 },
-  //     { id: 186, name: 'Duff', likes: 10 },
-  //     { id: 184, name: 'Sierra Nevada', likes: 124 },
-  //     { id: 183, name: 'New Belgium: Citradelic', likes: 3 },
-  //     { id: 179, name: 'Shorts: Soft Parade', likes: 38 },
-  //     { id: 174, name: 'Corona', likes: 28 },
-  //     { id: 169, name: 'Magic Hat #9', likes: 26 },
-  //     { id: 135, name: 'Oberon', likes: 17 },
-  //     { id: 99, name: 'Two Hearted', likes: 37 },
-  //   ]),
-  // });
 }

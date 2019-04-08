@@ -1,9 +1,10 @@
 # GET https://beer.fluentcloud.com/v1/beer HTTP/1.1
 # content-type: application/json
 
-PUT https://beer.fluentcloud.com/v1/beer/193 HTTP/1.1
+POST https://beer.fluentcloud.com/v1/beer HTTP/1.1
 content-type: application/json
 
 {
-  "likes": "15"
+  "name": "Natural Ice",
+  "likes": "5"
 }

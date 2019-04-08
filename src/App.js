@@ -67,11 +67,44 @@ class App extends Component {
     this.setState(({ position, options }) => {
       let newPosition = (position + step) % options.length;
       newPosition =
-        newPosition > 0 ? newPosition : newPosition + options.length - 4;
+        newPosition >= 0 ? newPosition : newPosition + options.length - 4;
       return {
         position: newPosition,
       };
     });
+  };
+
+  createOption = async name => {
+    try {
+      // update server
+      await fetch(`${url}/beer`, {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+          likes: 1,
+        }),
+      });
+
+      // API is currently responding with 204 and no id, so full list is refetched on success
+      // a timeout is used as there is a race condition with arrival of success message and the
+      // creation of beer in database.
+      setTimeout(async () => {
+        try {
+          const result = await fetch(`${url}/beer`);
+          const jsonResult = await result.json();
+          const filteredResult = jsonResult.filter(
+            option => option.name !== ''
+          );
+          // update state
+          this.setState({ options: filteredResult, adding: false });
+        } catch (err) {
+          console.log(err);
+        }
+      }, 500);
+    } catch (err) {
+      console.log(err);
+      this.setState({ error: 'Failed to create beer option.' });
+    }
   };
 
   toggleAdd = () => this.setState({ adding: !this.state.adding });
@@ -103,7 +136,11 @@ class App extends Component {
             ) : null}
           </header>
           {adding ? (
-            <AddBottle setError={this.setError} />
+            <AddBottle
+              setError={this.setError}
+              createOption={this.createOption}
+              toggleAdd={this.toggleAdd}
+            />
           ) : (
             <BucketScene
               options={options}
