@@ -34,8 +34,8 @@ function preflight(callback) {
 
 function updateLikes(id, likes, callback) {
   const clientReq = https.request(
-    `https://beer.fluentcloud.com/v1/beer/${id}`,
     {
+      ...url.parse(`https://beer.fluentcloud.com/v1/beer/${id}`),
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -82,8 +82,8 @@ function updateLikes(id, likes, callback) {
 
 function createBeer(name, likes, callback) {
   const clientReq = https.request(
-    `https://beer.fluentcloud.com/v1/beer`,
     {
+      ...url.parse('https://beer.fluentcloud.com/v1/beer'),
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
