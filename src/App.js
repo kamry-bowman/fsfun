@@ -72,6 +72,8 @@ class App extends Component {
     });
   };
 
+  toggleEdit = () => this.setState({ editing: !this.state.editing });
+
   render() {
     const { editing, options, position } = this.state;
     return (
@@ -82,8 +84,12 @@ class App extends Component {
               FluentStream Fun Summer Fun Time
             </HeaderText>
             <Nav fontSize={3} color="blue" py={4}>
-              <p>{`Don't see what you like?`}</p>
-              <button>Add a beer</button>
+              <p>
+                {!editing ? `Don't see what you like?` : `Changed your mind?`}
+              </p>
+              <button type="button" onClick={this.toggleEdit}>
+                {!editing ? 'Add a beer' : 'Back to bucket'}
+              </button>
             </Nav>
           </header>
           {editing ? null : (
