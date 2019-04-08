@@ -35,4 +35,5 @@ const LikesCount = styled.p`
   font-size: 4rem;
   opacity: 0.8;
   padding-bottom: 14px;
+  cursor: pointer;
 `;

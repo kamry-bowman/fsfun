@@ -69,9 +69,15 @@ const BottlesFrame = styled.div`
           transform: scale(1.1) rotate(180deg);
         }
       }
+    }
 
+    &:active {
       img {
-        transition: transform 0.4s;
+        transform: scale(0.9);
+
+        &.inverted {
+          transform: scale(0.9) rotate(180deg);
+        }
       }
     }
 

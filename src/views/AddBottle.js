@@ -87,6 +87,12 @@ const Container = styled.div`
       }
     }
 
+    &:active {
+      img {
+        transform: scale(0.9);
+      }
+    }
+
     img {
       width: 100%;
       height: 100%;
