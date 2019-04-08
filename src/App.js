@@ -31,7 +31,6 @@ class App extends Component {
   fetchOptions = async () => {
     try {
       const result = await fetch(`${url}/beer`);
-      console.log(`${url}/beer`);
       const jsonResult = await result.json();
       const filteredResult = jsonResult.filter(option => option.name !== '');
       this.setState({ options: filteredResult });
