@@ -8,7 +8,7 @@ const theme = {
     offWhite: '#E7E7E7',
   },
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
-  fontSizes: ['1.2rem', '1.6rem', '2rem', '3.2rem', '5.4rem'],
+  fontSizes: ['1.2rem', '1.6rem', '2rem', '3.2rem', '7.4rem'],
 };
 
 theme.fontSizes.header = theme.fontSizes[4];

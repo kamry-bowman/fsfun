@@ -59,13 +59,26 @@ class App extends Component {
     }
   };
 
+  // updates position in range of options, wrapping around
+  updatePos = step => {
+    console.log(step);
+    this.setState(({ position, options }) => {
+      let newPosition = (position + step) % options.length;
+      newPosition =
+        newPosition > 0 ? newPosition : newPosition + options.length - 4;
+      return {
+        position: newPosition,
+      };
+    });
+  };
+
   render() {
     const { editing, options, position } = this.state;
     return (
       <ThemeProvider theme={theme}>
         <MainApp bg="lightBlue">
           <header>
-            <HeaderText fontSize="header" color="blue">
+            <HeaderText fontSize="header" color="blue" py={5}>
               FluentStream Fun Summer Fun Time
             </HeaderText>
           </header>
@@ -74,6 +87,8 @@ class App extends Component {
               options={options}
               position={position}
               updateLikes={this.updateLikes}
+              selectLeft={() => this.updatePos(-4)}
+              selectRight={() => this.updatePos(4)}
             />
           )}
         </MainApp>
@@ -85,7 +100,7 @@ class App extends Component {
 const MainApp = styled.div`
   ${color}
   ${space}
-  min-width: 960px;
+  min-width: 1140px;
   display: flex;
   flex-direction: column;
 `;
@@ -93,6 +108,7 @@ const MainApp = styled.div`
 const HeaderText = styled.h1`
   ${fontSize}
   ${color}
+  ${space}
   text-align: center;
   font-weight: 800;
 `;
