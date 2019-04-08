@@ -8,7 +8,7 @@ import theme from './theme';
 
 const url =
   process.env.NODE_ENV === 'production'
-    ? './api'
+    ? '.netlify/functions'
     : process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
