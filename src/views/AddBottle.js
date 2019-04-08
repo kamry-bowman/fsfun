@@ -9,6 +9,8 @@ export default class AddBottle extends React.Component {
     name: '',
   };
 
+  inputRef = React.createRef();
+
   updateName = e => {
     if (e.target.value.length > 24) {
       this.props.setError('Cannot accept names over 24 characters.');
@@ -26,9 +28,11 @@ export default class AddBottle extends React.Component {
     this.props.createOption(this.state.name);
   };
 
-  render() {
-    // const {} = this.props;
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
 
+  render() {
     return (
       <Container mx={4}>
         <Bottle>
@@ -39,6 +43,7 @@ export default class AddBottle extends React.Component {
               id="name"
               value={this.state.name}
               onChange={this.updateName}
+              ref={this.inputRef}
             />
             <button type="submit">
               <img src={add} alt="Create bottle" />
