@@ -134,28 +134,26 @@ function getBeers(callback) {
       clientRes.setEncoding('utf8');
       let rawData = '';
       clientRes.on('data', chunk => {
+        console.log('chunk received', chunk);
         rawData += chunk;
       });
       clientRes.on('error', err => {
-        console.error(err);
+        console.log('error here line 140', err);
         callback(err.message);
       });
       clientRes.on('end', () => {
-        try {
-          callback(null, {
-            statusCode: 200,
-            headers: {
-              'content-type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-            },
-            body: rawData,
-          });
-        } catch (e) {
-          callback(e.message);
-        }
+        console.log('end hit', rawData);
+        callback(null, {
+          statusCode: 200,
+          headers: {
+            'content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+          },
+          body: rawData,
+        });
       });
     }
   );
-
+  console.log('right before calling the clientReq');
   clientReq.end();
 }

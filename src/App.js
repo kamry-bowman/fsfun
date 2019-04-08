@@ -6,10 +6,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import { color, space, fontSize } from 'styled-system';
 import theme from './theme';
 
-const url =
-  process.env.NODE_ENV === 'production'
-    ? '.netlify/functions'
-    : process.env.REACT_APP_SERVER_URL;
+const url = process.env.REACT_APP_SERVER_URL;
 
 class App extends Component {
   state = {
