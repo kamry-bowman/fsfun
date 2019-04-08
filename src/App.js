@@ -30,7 +30,6 @@ class App extends Component {
     try {
       const result = await fetch(`${url}/beer`);
       const jsonResult = await result.json();
-      console.log(jsonResult);
       const filteredResult = jsonResult.filter(option => option.name !== '');
       this.setState({ options: filteredResult });
     } catch (err) {
@@ -39,7 +38,7 @@ class App extends Component {
     }
   };
 
-  updateLikes = async ({ id, name, likes }) => {
+  updateLikes = async ({ id, likes }) => {
     const newLikes = likes + 1;
     try {
       // update server
@@ -86,7 +85,7 @@ class App extends Component {
 const MainApp = styled.div`
   ${color}
   ${space}
-  height: 100vh;
+  min-width: 960px;
   display: flex;
   flex-direction: column;
 `;

@@ -11,7 +11,7 @@ exports.handler = (event, context, callback) => {
   }
 };
 
-async function preflight(callback) {
+function preflight(callback) {
   callback(null, {
     statusCode: 204,
     headers: {
@@ -23,7 +23,7 @@ async function preflight(callback) {
   });
 }
 
-async function updateLikes(id, likes, callback) {
+function updateLikes(id, likes, callback) {
   const clientReq = https.request(
     `https://beer.fluentcloud.com/v1/beer/${id}`,
     {
@@ -33,11 +33,17 @@ async function updateLikes(id, likes, callback) {
       },
     },
     clientRes => {
+      clientRes.setEncoding('utf8');
       clientRes.on('error', err => {
-        console.error(err);
+        console.log(err);
         callback(err.message);
       });
+      clientRes.on('data', () => {
+        // data is not needed, but res requires
+        // data event to be processed to exit
+      });
       clientRes.on('end', () => {
+        console.log('end');
         try {
           callback(null, {
             statusCode: 204,
@@ -45,9 +51,9 @@ async function updateLikes(id, likes, callback) {
               'content-type': 'application/json',
               'Access-Control-Allow-Origin': '*',
             },
-            body: rawData,
           });
         } catch (e) {
+          console.log(e, 'caught');
           callback(e.message);
         }
       });
@@ -59,6 +65,12 @@ async function updateLikes(id, likes, callback) {
     })
   );
   clientReq.end();
+  console.log(
+    'trying',
+    JSON.stringify({
+      likes,
+    })
+  );
 }
 
 async function getBeers(callback) {

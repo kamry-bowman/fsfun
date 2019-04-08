@@ -5,13 +5,10 @@ import { space, color } from 'styled-system';
 
 export default function Heart(props) {
   const { likes } = props;
-  const pt = 4;
   return (
-    <HeartFrame pt={pt} onClick={props.onClick}>
+    <HeartFrame onClick={props.onClick}>
       <HeartSvg />
-      <LikesCount pt={pt} color="offWhite">
-        {likes}
-      </LikesCount>
+      <LikesCount color="offWhite">{likes}</LikesCount>
     </HeartFrame>
   );
 }
@@ -21,6 +18,7 @@ const HeartFrame = styled.div`
   width: 100%;
   position: relative;
   display: flex;
+  padding-bottom: 14px;
 `;
 
 const LikesCount = styled.p`
@@ -36,4 +34,5 @@ const LikesCount = styled.p`
   align-items: center;
   font-size: 4rem;
   opacity: 0.8;
+  padding-bottom: 14px;
 `;

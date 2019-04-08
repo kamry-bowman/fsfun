@@ -26,11 +26,19 @@ const BottleFrame = styled.div`
   ${space}
   position: relative;
   display: flex;
+  flex-direction: column;
+  width: 195px;
+  height: 737px;
+  z-index: 1;
 
   h2 {
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 4.2rem;
+    font-size: 3.2rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
   }
 `;
@@ -39,11 +47,11 @@ const DataContainer = styled.div`
   ${space}
   position: absolute;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
-  align-items: center;
-  top: 60%;
+  top: 384px;
   left: 0;
   right: 0;
   width: 100%;
+  height: 302px;
 `;
