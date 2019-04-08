@@ -123,8 +123,8 @@ function createBeer(name, likes, callback) {
 function getBeers(callback) {
   console.log('called getBeers');
   const clientReq = https.request(
-    'https://beer.fluentcloud.com/v1/beer',
     {
+      url: 'https://beer.fluentcloud.com/v1/beer',
       headers: {
         'Content-Type': 'application/json',
       },
